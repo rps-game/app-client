@@ -1,0 +1,37 @@
+<script setup lang="ts">
+import { withDefaults } from 'vue';
+import { useModelWrapper } from '@/utils';
+import type { BInputProps } from '@/components/base/BInput/interface';
+
+const props = withDefaults(defineProps<BInputProps>(), {
+  modelValue: '',
+});
+
+const id = props.id ?? String(Math.random());
+
+const emit = defineEmits<{
+  input: [value: string];
+  'update:modelValue': [value: string];
+}>();
+
+const modelValue = useModelWrapper(props, emit, 'modelValue');
+</script>
+
+<template>
+  <div>
+    <label
+      v-if="props.label"
+      class=""
+      :for="id">
+      {{ label }}
+    </label>
+    <input
+      :id="id"
+      v-model="modelValue"
+      type="text"
+      v-bind="$attrs"
+      @input="$emit('input', $event.target.value)">
+  </div>
+</template>
+
+
