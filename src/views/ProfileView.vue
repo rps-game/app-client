@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { IUser, useUserStore } from '@/stores/user';
+import { useUserStore } from '@/stores/user';
+import type { IUser } from '@/stores/user';
 import { AXIOS } from '@/utils';
 import { reactive } from 'vue';
 

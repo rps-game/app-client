@@ -3,7 +3,8 @@ import BInput from '@/components/base/BInput/BInput.vue';
 import { reactive } from 'vue';
 import router from '@/router';
 import { AXIOS } from '@/utils';
-import { IUser, useUserStore } from '@/stores/user';
+import { useUserStore } from '@/stores/user';
+import type { IUser } from '@/stores/user';
 
 const state = reactive({
   name: '',
@@ -22,7 +23,7 @@ async function submitForm() {
 async function submitCode() {
   const user = store.user;
 
-  if (user === undefined) {
+  if (user == null) {
     return router.push({ name: 'login' });
   }
 

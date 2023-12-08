@@ -14,6 +14,10 @@ const emit = defineEmits<{
   'update:modelValue': [value: string];
 }>();
 
+function onInput(event: Event): void {
+  emit('input', (<HTMLInputElement>event.target).value);
+}
+
 const modelValue = useModelWrapper(props, emit, 'modelValue');
 </script>
 
@@ -30,7 +34,7 @@ const modelValue = useModelWrapper(props, emit, 'modelValue');
       v-model="modelValue"
       type="text"
       v-bind="$attrs"
-      @input="$emit('input', $event.target.value)">
+      @input="onInput">
   </div>
 </template>
 

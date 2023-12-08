@@ -6,6 +6,7 @@ import { useUserStore } from '@/stores/user';
 
 export function useModelWrapper<T extends object>(props: T, emit: Function, name = 'modelValue') {
   return computed({
+  // @ts-ignore
     get: () => props[name],
     set: (value) => emit(`update:${name}`, value),
   });

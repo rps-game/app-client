@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { AXIOS } from '@/utils';
-import { reactive, onBeforeUnmount, computed, ComputedRef, watch } from 'vue';
+import { reactive, onBeforeUnmount, computed, watch } from 'vue';
+import type { ComputedRef } from 'vue';
 import { useRoute } from 'vue-router';
 import router from '@/router';
 import { useUserStore } from '@/stores/user';
@@ -58,7 +59,7 @@ const state = reactive<{game: IGame, select: RPSLS | null, error: string}>({
   error: '',
 });
 
-let interval: number;
+let interval: any;
 watch(route, (r) => {
   if (!r) {
     return;
@@ -115,7 +116,7 @@ async function replay() {
   try {
     const res = await AXIOS.post<IGame>('/games', {
       members: state.game.members.map(({ id }) => ({ id })),
-      raise: false,
+      notRaise: true,
     });
 
     await router.push({ name: 'game', params: { id: res.data.id }});
@@ -146,7 +147,7 @@ async function replay() {
         <button
           v-for="(v,k) in map"
           :key="`${k}-rpsls`"
-          :disabled="hasSelect || state.game.result"
+          :disabled="Boolean(hasSelect || state.game.result)"
           @click="upGame(k, state.game.id)">
           {{ v.text }} {{ v.emoji }}
         </button>
