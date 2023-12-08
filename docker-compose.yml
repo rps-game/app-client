@@ -47,8 +47,7 @@ services:
       - secret_key
   app-client:
     <<: *service-defaults
-    image: app-client
-    build: .
+    image: 4kit0/app-client:latest
     depends_on:
       - app-server
       - telegram-bot
