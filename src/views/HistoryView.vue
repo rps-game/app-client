@@ -20,21 +20,25 @@ getData();
 </script>
 
 <template>
-  <button @click="getData">
-    🔄
-  </button>
-  <ol>
-    <li
-      v-for="game in state.data"
-      :key="`${game.id}-game`">
-      <component
-        :is="player.isWinner ? 'strong' : 'span'"
-        v-for="player in game.members"
-        :key="`${player.id}-player`"
-        @click="router.push({name: 'history-game', params: {id: game.id}})">
-        {{ player.name }},&nbsp;
-      </component>
-    </li>
-  </ol>
-  <RouterView />
+  <div class="border-l border-black rounded-tl-2xl">
+    <div class="border border-black border-l-0 rounded-2xl rounded-tr-none rounded-bl-none p-3">
+      <button @click="getData">
+        🔄
+      </button>
+      <ol>
+        <li
+          v-for="game in state.data"
+          :key="`${game.id}-game`">
+          <component
+            :is="player.isWinner ? 'strong' : 'span'"
+            v-for="player in game.members"
+            :key="`${player.id}-player`"
+            @click="router.push({name: 'history-game', params: {id: game.id}})">
+            {{ player.name }},&nbsp;
+          </component>
+        </li>
+      </ol>
+    </div>
+    <RouterView />
+  </div>
 </template>

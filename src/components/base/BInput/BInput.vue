@@ -34,6 +34,7 @@ const modelValue = useModelWrapper(props, emit, 'modelValue');
       :id="id"
       v-model="modelValue"
       :type="type"
+      class="border border-black px-2 py-1 outline-0"
       v-bind="$attrs"
       @input="onInput">
   </div>

@@ -32,7 +32,8 @@ enum RPSLS {
   SPOCK = 5
 }
 
-const hasSelect: ComputedRef<RPSLS | undefined> = computed(() => state.game.members.find(m => m.id === store.user?.id)?.choice);
+const userSelect: ComputedRef<RPSLS | undefined> = computed(() => state.game.members.find(m => m.id === store.userId)?.choice);
+
 const noWinner: ComputedRef<boolean> = computed(() => {
   if (!state.game.result?.value) {
     return false;
@@ -131,27 +132,34 @@ async function replay() {
 </script>
 
 <template>
-  <div>
+  <div class="mt-2 border border-black p-2 border-l-0 rounded-2xl rounded-l-none">
     <template v-if="state.game.id">
-      <ul>
+      <ul class="flex flex-row gap-2 mb-3 flex-wrap">
         <li
           v-for="u in state.game.members"
-          :key="`${u.id}-user`">
+          :key="`${u.id}-user`"
+          class="bg-sky-100 rounded-2xl py-1 px-3.5">
           {{ u.name }} {{ getUserState(u.choice, u.delta) }}
         </li>
       </ul>
-      <div class="flex flex-col">
+      <div class="flex flex-row flex-wrap gap-1">
         <button
           v-for="(v,k) in map"
           :key="`${k}-rpsls`"
-          :disabled="Boolean(hasSelect || state.game.result)"
+          class="bg-transparent text-black py-2 px-4 rounded-2xl border border-black disabled:bg-gray-300 disabled:border-transparent"
+          :class="{'disabled:bg-red-200': k == userSelect}"
+          :disabled="Boolean(userSelect || state.game.result)"
           @click="upGame(k, state.game.id)">
           {{ v.text }} {{ v.emoji }}
         </button>
       </div>
     </template>
-    <div v-if="noWinner">
-      <button @click="replay">
+    <div
+      v-if="noWinner"
+      class="mt-1">
+      <button
+        class="bg-red-400 text-white py-2 px-4 rounded-2xl"
+        @click="replay">
         Replay
       </button>
     </div>
