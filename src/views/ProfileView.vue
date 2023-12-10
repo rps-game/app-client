@@ -21,6 +21,9 @@ getData();
   <main>
     <div>
       #{{ state.data?.id }} {{ state.data?.name }}
+      <button @click="getData">
+        🔄
+      </button>
     </div>
     <div>
       {{ state.data?.rating }}

@@ -78,9 +78,6 @@ void getUsers('');
 </script>
 
 <template>
-  <!--  <button @click="router.back()">-->
-  <!--    back-->
-  <!--  </button>-->
   <b-input
     v-model="state.search"
     @input="getUsers" />

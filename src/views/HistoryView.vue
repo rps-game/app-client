@@ -20,6 +20,9 @@ getData();
 </script>
 
 <template>
+  <button @click="getData">
+    🔄
+  </button>
   <ol>
     <li
       v-for="game in state.data"

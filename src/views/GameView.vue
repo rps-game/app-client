@@ -115,8 +115,9 @@ async function upGame(v: RPSLS, gameId: string) {
 async function replay() {
   try {
     const res = await AXIOS.post<IGame>('/games', {
-      members: state.game.members.map(({ id }) => ({ id })),
-      notRaise: true,
+      members: state.game.members
+        .filter(({ id }) => store.userId !== id)
+        .map(({ id }) => ({ id })),
     });
 
     await router.push({ name: 'game', params: { id: res.data.id }});
@@ -131,10 +132,6 @@ async function replay() {
 
 <template>
   <div>
-<!--    <button-->
-<!--      @click="router.back()">-->
-<!--      back-->
-<!--    </button>-->
     <template v-if="state.game.id">
       <ul>
         <li

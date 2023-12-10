@@ -17,6 +17,9 @@ getData();
 </script>
 
 <template>
+  <button @click="getData">
+    🔄
+  </button>
   <ol>
     <template
       v-for="el in state.data"
