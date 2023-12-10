@@ -61,10 +61,10 @@ async function submitCode() {
       class="flex flex-col items-center"
       @submit.prevent="submitForm">
       <b-input
-        v-model="state.tglogin"
+        v-model.trim="state.tglogin"
         label="TG username" />
       <b-input
-        v-model="state.name"
+        v-model.trim="state.name"
         label="Имя" />
       <button
         type="submit">
@@ -80,7 +80,8 @@ async function submitCode() {
           class="flex flex-col items-center"
           @submit.prevent="submitCode">
           <b-input
-            v-model="state.code"
+            v-model.number="state.code"
+            type="number"
             label="Код" />
           <button type="submit">
             Отправить код

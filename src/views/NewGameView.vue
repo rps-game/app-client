@@ -5,6 +5,7 @@ import router from '@/router';
 import { AXIOS } from '@/utils';
 import type { IUser } from '@/stores/user';
 import { debounce } from 'lodash-es';
+import type { IGame } from '@/views/GameView.vue';
 
 const MAX = 4;
 const MIN = 1;
@@ -38,15 +39,16 @@ async function create() {
       return;
     }
 
-    await AXIOS.post('/games', {
+    const res = await AXIOS.post<IGame>('/games', {
       members: state.selected.map(e => ({ id: e })),
     });
 
-    void router.push({ name: 'pending-games' });
+    void router.push({ name: 'game', params: { id: res.data.id }});
   } catch (e: any) {
     if (typeof e.response?.data.message === 'string') {
       state.error = e.response?.data.message;
     }
+
     console.error(e);
   }
 }

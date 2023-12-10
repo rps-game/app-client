@@ -5,6 +5,7 @@ import type { BInputProps } from '@/components/base/BInput/interface';
 
 const props = withDefaults(defineProps<BInputProps>(), {
   modelValue: '',
+  type: 'text',
 });
 
 const id = props.id ?? String(Math.random());
@@ -32,7 +33,7 @@ const modelValue = useModelWrapper(props, emit, 'modelValue');
     <input
       :id="id"
       v-model="modelValue"
-      type="text"
+      :type="type"
       v-bind="$attrs"
       @input="onInput">
   </div>
