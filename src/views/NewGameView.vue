@@ -42,7 +42,7 @@ async function create() {
     }
 
     const res = await AXIOS.post<IGame>('/games', {
-      members: state.selected.map(e => ({ id: e })),
+      members: state.selected.map(({ id }) => ({ id })),
     });
 
     void router.push({ name: 'game', params: { id: res.data.id }});
