@@ -6,4 +6,5 @@ import router from '@/router';
   <button @click="router.push({name: 'new-game'})">
     Начать
   </button>
+  <RouterView />
 </template>

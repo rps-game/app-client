@@ -30,4 +30,5 @@ getData();
       </li>
     </template>
   </ol>
+  <RouterView />
 </template>

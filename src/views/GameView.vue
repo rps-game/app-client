@@ -83,7 +83,7 @@ async function getData(gameId: string) {
 }
 
 const map = {
-  [RPSLS.ROCK]: { emoji: '🪨', text: 'ROCK' },
+  [RPSLS.ROCK]: { emoji: '🗿', text: 'ROCK' },
   [RPSLS.PAPER]: { emoji: '🧻', text: 'PAPER' },
   [RPSLS.SCISSORS]: { emoji: '✂️', text: 'SCISSORS' },
   [RPSLS.LIZARD]: { emoji: '🦎', text: 'LIZARD' },
@@ -131,10 +131,10 @@ async function replay() {
 
 <template>
   <div>
-    <button
-      @click="router.back()">
-      back
-    </button>
+<!--    <button-->
+<!--      @click="router.back()">-->
+<!--      back-->
+<!--    </button>-->
     <template v-if="state.game.id">
       <ul>
         <li

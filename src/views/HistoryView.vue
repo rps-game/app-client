@@ -2,7 +2,6 @@
 import router from '@/router';
 import { AXIOS } from '@/utils';
 import { reactive } from 'vue';
-import type { IUser } from '@/stores/user';
 import type { IGame } from '@/views/GameView.vue';
 import { useUserStore } from '@/stores/user';
 
@@ -29,9 +28,10 @@ getData();
         :is="player.isWinner ? 'strong' : 'span'"
         v-for="player in game.members"
         :key="`${player.id}-player`"
-        @click="router.push({name: 'game', params: {id: game.id}})">
+        @click="router.push({name: 'history-game', params: {id: game.id}})">
         {{ player.name }},&nbsp;
       </component>
     </li>
   </ol>
+  <RouterView />
 </template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
 import BInput from '@/components/base/BInput/BInput.vue';
 import router from '@/router';
 import { AXIOS } from '@/utils';
@@ -10,27 +10,29 @@ import type { IGame } from '@/views/GameView.vue';
 const MAX = 4;
 const MIN = 1;
 
-const state = reactive<{search: string, data: Array<IUser>, selected: string[], error: string}>({
+const state = reactive<{search: string, data: Array<IUser>, selected: IUser[], error: string}>({
   search: '',
   data: [],
   selected: [],
   error: '',
 });
 
-function add(id: string) {
-  if (state.selected.includes(id) && state.selected.length === MAX) {
+const selectedIds = computed(() => state.selected.map(({ id }) => id));
+
+function add(user: IUser) {
+  if (selectedIds.value.includes(user.id) && state.selected.length === MAX) {
     return;
   }
 
-  state.selected.push(id);
+  state.selected.push(user);
 }
 
 function remove(id: string) {
-  if (!state.selected.includes(id)) {
+  if (!selectedIds.value.includes(id)) {
     return;
   }
 
-  state.selected = state.selected.filter(e => e !== id);
+  state.selected = state.selected.filter(e => e.id !== id);
 }
 
 async function create() {
@@ -55,7 +57,7 @@ async function create() {
 
 const getUsers = debounce(async (v: string) => {
   try {
-    if (v === '') {
+    if (v.length < 3 && v.length > 1) {
       return;
     }
 
@@ -71,12 +73,14 @@ const getUsers = debounce(async (v: string) => {
     console.error(e);
   }
 }, 300);
+
+void getUsers('');
 </script>
 
 <template>
-  <button @click="router.back()">
-    back
-  </button>
+  <!--  <button @click="router.back()">-->
+  <!--    back-->
+  <!--  </button>-->
   <b-input
     v-model="state.search"
     @input="getUsers" />
@@ -98,13 +102,13 @@ const getUsers = debounce(async (v: string) => {
         <td>{{ el.rating }}</td>
         <td>
           <button
-            :disabled="!state.selected.includes(el.id)"
+            :disabled="!selectedIds.includes(el.id)"
             @click="remove(el.id)">
             -
           </button>
           <button
-            :disabled="state.selected.includes(el.id)"
-            @click="add(el.id)">
+            :disabled="selectedIds.includes(el.id)"
+            @click="add(el)">
             +
           </button>
         </td>
@@ -115,11 +119,11 @@ const getUsers = debounce(async (v: string) => {
     <li
       v-for="el in state.selected"
       :key="`${el}-sel`">
-      <button @click="remove(el)">
+      <button @click="remove(el.id)">
         -
       </button>
       <span>
-        {{ state.data.find(e => e.id === el)?.name }}
+        {{ el.name }}
       </span>
     </li>
   </ul>
