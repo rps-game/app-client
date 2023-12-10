@@ -95,11 +95,11 @@ onBeforeUnmount(() => {
 });
 
 function getUserState(v?: RPSLS, delta?: number) {
-  if (state.game.result) {
+  if (state.game.result && v) {
     if (state.game.result.value === Results.WIN) {
       return v === state.game.result.choice ? `${map[v].emoji} +${delta} 👑` : `${map[v!].emoji} -${delta} 🤡`;
     } else {
-      return '🤡';
+      return `🤡 - ${map[v].emoji}`;
     }
   } else {
     return v ? '✅' : '🎲';
