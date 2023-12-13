@@ -6,6 +6,8 @@ import type { BInputProps } from '@/components/base/BInput/interface';
 const props = withDefaults(defineProps<BInputProps>(), {
   modelValue: '',
   type: 'text',
+  inputClass: '',
+  disabled: false
 });
 
 const id = props.id ?? String(Math.random());
@@ -34,7 +36,9 @@ const modelValue = useModelWrapper(props, emit, 'modelValue');
       :id="id"
       v-model="modelValue"
       :type="type"
-      class="border border-black px-2 py-1 outline-0"
+      class="border border-black px-2 py-1 outline-0 disabled:text-gray-600 disabled:bg-gray-300 disabled:border-gray-300"
+      :disabled="disabled"
+      :class="props.inputClass"
       v-bind="$attrs"
       @input="onInput">
   </div>

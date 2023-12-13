@@ -8,9 +8,22 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: () => import('../views/LoginView.vue'),
+      redirect: { name: 'sign-up' },
       meta: {
         allowAnonymous: true,
       },
+      children: [
+        {
+          path: '/sign-up',
+          name: 'sign-up',
+          component: () => import('../views/SignUpView.vue'),
+        },
+        {
+          path: '/sign-in',
+          name: 'sign-in',
+          component: () => import('../views/SignInView.vue'),
+        },
+      ],
       beforeEnter(to, from, next) {
         const store = useUserStore();
 

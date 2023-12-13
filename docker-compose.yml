@@ -56,16 +56,5 @@ services:
       SECRET_KEY: $SECRET_KEY
       REQUIRE_UNIQUE_GAMES: $REQUIRE_UNIQUE_GAMES
 
-  app-client:
-    <<: *service-defaults
-    image: 4kit0/app-client:latest
-    depends_on:
-      - app-server
-      - auth-bot
-      - mongo-db
-    container_name: app-client
-    ports:
-      - "8080:80"
-
 volumes:
   db_data:
