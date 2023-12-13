@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import BInput from '@/components/base/BInput/BInput.vue';
 import { reactive, computed } from 'vue';
-import { IUser, useUserStore } from '@/stores/user';
+import { useUserStore } from '@/stores/user';
+import type { IUser } from '@/stores/user';
 import { AXIOS } from '@/utils';
 import router from '@/router';
 
