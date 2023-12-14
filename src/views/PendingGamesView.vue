@@ -25,7 +25,9 @@ getData();
       <button @click="getData">
         🔄
       </button>
-      <ul class="flex flex-col gap-1">
+      <ul
+        v-if="state.data.length > 0"
+        class="flex flex-col gap-1">
         <template
           v-for="el in state.data"
           :key="`${el.id}-game`">
@@ -42,6 +44,11 @@ getData();
           </li>
         </template>
       </ul>
+      <div
+        v-else
+        class="flex flex-col justify-center text-center text-xl h-[20vh]">
+        У вас нет незавершенных игр
+      </div>
     </div>
     <RouterView />
   </div>

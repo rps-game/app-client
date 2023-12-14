@@ -1,6 +1,3 @@
-<script setup lang="ts">
-</script>
-
 <template>
   <main class="flex flex-col items-center mt-36">
     <nav class="flex flex-row justify-between w-full">

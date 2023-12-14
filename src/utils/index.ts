@@ -89,6 +89,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use(response => {
   return response;
 }, error => {
+  alert(error.response?.data.message ?? error);
   if (error.response.status === 401) {
     void logout();
     void router.push({ name: 'login' });
@@ -103,3 +104,27 @@ export async function logout() {
 }
 
 export const AXIOS = axiosInstance;
+
+export interface IPlayer {
+  id: string
+  name: string;
+  isWinner?: boolean;
+  delta?: number;
+  choice?: number;
+}
+
+export enum Results {
+  TIE='tie',
+  WIN='win',
+  LOSE='lose',
+  STALEMATE='stalemate',
+}
+
+export interface IGame {
+  id: string;
+  members: IPlayer[];
+  result?: {
+    value: Results,
+    choice: number | number[]
+  };
+}

@@ -53,7 +53,7 @@ async function submitCode() {
         type="submit"
         class="bg-transparent text-black py-2 px-4 border border-black disabled:text-gray-600 disabled:bg-gray-300 disabled:border-gray-300 ml-0.5"
         :disabled="disableSubmitSignUp">
-        Получить код
+        Отправить
       </button>
     </form>
     <form
@@ -68,7 +68,7 @@ async function submitCode() {
         type="submit"
         class="bg-transparent flex-grow text-black py-2 px-4 border border-black disabled:bg-gray-300 disabled:border-gray-300 disabled:text-gray-600 ml-0.5"
         :disabled="disableSubmitCode">
-        Отправить
+        Войти
       </button>
     </form>
   </div>

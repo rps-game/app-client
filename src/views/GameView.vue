@@ -1,28 +1,17 @@
 <script setup lang="ts">
-import { AXIOS } from '@/utils';
-import { reactive, onBeforeUnmount, computed, watch } from 'vue';
+import { AXIOS, IGame, Results } from '@/utils';
+import { reactive, onBeforeUnmount, computed, watch, onMounted } from 'vue';
 import type { ComputedRef } from 'vue';
 import { useRoute } from 'vue-router';
 import router from '@/router';
 import { useUserStore } from '@/stores/user';
+import BModal from '@/components/base/BModal/BModal.vue';
+import { useVfm } from 'vue-final-modal';
 
 const route = useRoute();
 const store = useUserStore();
-
-export interface IPlayer {
-  id: string
-  name: string;
-  isWinner?: boolean;
-  delta?: number;
-  choice?: number;
-}
-
-enum Results {
-  TIE='tie',
-  WIN='win',
-  LOSE='lose',
-  STALEMATE='stalemate',
-}
+const modalId = Symbol('game-modal');
+const vfm = useVfm();
 
 enum RPSLS {
   ROCK = 1,
@@ -43,14 +32,6 @@ const noWinner: ComputedRef<boolean> = computed(() => {
       state.game.result.value === Results.TIE;
 });
 
-export interface IGame {
-  id: string;
-  members: IPlayer[];
-  result?: {
-    value: Results,
-    choice: number | number[]
-  };
-}
 const state = reactive<{game: IGame, select: RPSLS | null, error: string}>({
   game: {
     id: '',
@@ -61,6 +42,9 @@ const state = reactive<{game: IGame, select: RPSLS | null, error: string}>({
 });
 
 let interval: any;
+
+const onCloseRoute = computed(() => route.name === 'history-game' ? 'history' : 'pending-games');
+
 watch(route, (r) => {
   if (!r) {
     return;
@@ -129,10 +113,17 @@ async function replay() {
     console.error(e);
   }
 }
+
+onMounted(() => {
+  vfm.open(modalId);
+});
 </script>
 
 <template>
-  <div class="mt-2 border border-black p-2 border-l-0 rounded-2xl rounded-l-none">
+  <BModal
+    :display-directive="'visible'"
+    :modal-id="modalId"
+    @closed="router.push({name: onCloseRoute})">
     <template v-if="state.game.id">
       <ul class="flex flex-row gap-2 mb-3 flex-wrap">
         <li
@@ -163,5 +154,5 @@ async function replay() {
         Replay
       </button>
     </div>
-  </div>
+  </BModal>
 </template>

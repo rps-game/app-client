@@ -2,10 +2,9 @@
 import { reactive, computed } from 'vue';
 import BInput from '@/components/base/BInput/BInput.vue';
 import router from '@/router';
-import { AXIOS } from '@/utils';
+import { AXIOS, IGame } from '@/utils';
 import type { IUser } from '@/stores/user';
 import { debounce } from 'lodash-es';
-import type { IGame } from '@/views/GameView.vue';
 
 const MAX = 4;
 const MIN = 1;
@@ -36,42 +35,27 @@ function remove(id: string) {
 }
 
 async function create() {
-  try {
-    if (state.selected.length > MAX || state.selected.length < MIN) {
-      return;
-    }
-
-    const res = await AXIOS.post<IGame>('/games', {
-      members: state.selected.map(({ id }) => ({ id })),
-    });
-
-    void router.push({ name: 'game', params: { id: res.data.id }});
-  } catch (e: any) {
-    if (typeof e.response?.data.message === 'string') {
-      state.error = e.response?.data.message;
-    }
-
-    console.error(e);
+  if (state.selected.length > MAX || state.selected.length < MIN) {
+    return;
   }
+
+  const res = await AXIOS.post<IGame>('/games', {
+    members: state.selected.map(({ id }) => ({ id })),
+  });
+
+  void router.push({ name: 'game', params: { id: res.data.id }});
 }
 
 const getUsers = debounce(async (v: string) => {
-  try {
-    if (v.length < 3 && v.length > 1) {
-      return;
-    }
-
-    const res = await AXIOS.get<IUser[]>('/users', { params: {
-      search: v,
-    }});
-
-    state.data = res.data;
-  } catch (e: any) {
-    if (typeof e.response?.data.message === 'string') {
-      state.error = e;
-    }
-    console.error(e);
+  if (v.length < 3 && v.length > 1) {
+    return;
   }
+
+  const res = await AXIOS.get<IUser[]>('/users', { params: {
+    search: v,
+  }});
+
+  state.data = res.data;
 }, 300);
 
 void getUsers('');
