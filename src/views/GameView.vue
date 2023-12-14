@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { AXIOS, IGame, Results } from '@/utils';
+import { AXIOS, Results } from '@/utils';
+import type { IGame } from '@/utils';
 import { reactive, onBeforeUnmount, computed, watch, onMounted } from 'vue';
 import type { ComputedRef } from 'vue';
 import { useRoute } from 'vue-router';

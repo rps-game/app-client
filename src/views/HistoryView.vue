@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import router from '@/router';
-import { AXIOS, Results, IPlayer, IGame } from '@/utils';
+import { AXIOS, Results } from '@/utils';
+import type { IPlayer, IGame } from '@/utils';
 import { reactive } from 'vue';
 import { useUserStore } from '@/stores/user';
 import { useRoute } from 'vue-router';

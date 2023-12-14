@@ -2,7 +2,8 @@
 import { reactive, computed } from 'vue';
 import BInput from '@/components/base/BInput/BInput.vue';
 import router from '@/router';
-import { AXIOS, IGame } from '@/utils';
+import { AXIOS } from '@/utils';
+import type { IGame } from '@/utils';
 import type { IUser } from '@/stores/user';
 import { debounce } from 'lodash-es';
 
