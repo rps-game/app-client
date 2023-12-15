@@ -66,6 +66,7 @@ void getUsers('');
   <div class="border border-black p-2 rounded-2xl rounded-tl-none">
     <b-input
       v-model="state.search"
+      placeholder="Имя или ID игрока"
       class="w-full py-1"
       @input="getUsers" />
     <table
