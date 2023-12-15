@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import ModalLogin from '@/components/modals/ModalLogin/ModalLogin.vue';
+import { modalId } from '@/components/modals/ModalLogin/const';
+</script>
+
 <template>
   <main class="flex flex-col items-center mt-36">
     <nav class="flex flex-row justify-between w-full">
@@ -16,4 +21,5 @@
     </nav>
     <router-view />
   </main>
+  <ModalLogin :modal-id="modalId" />
 </template>

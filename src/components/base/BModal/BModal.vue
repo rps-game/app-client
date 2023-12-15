@@ -29,7 +29,7 @@ function onCloseClick() {
     <div class="flex items-center h-10">
       <h1
         v-if="title"
-        class="text-2xl">
+        class="text-xl">
         {{ title }}
       </h1>
       <button

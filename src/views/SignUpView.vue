@@ -4,7 +4,8 @@ import { reactive, computed } from 'vue';
 import { useUserStore } from '@/stores/user';
 import type { IUser } from '@/stores/user';
 import { AXIOS } from '@/utils';
-import router from '@/router';
+import { modalId } from '@/components/modals/ModalLogin/const';
+import { useVfm } from 'vue-final-modal';
 
 const state = reactive({
   name: '',
@@ -13,9 +14,9 @@ const state = reactive({
 });
 
 const disableSubmitSignUp = computed(() => state.name === '' || state.tglogin === '');
-const disableSubmitCode = computed(() => state.code == null || String(state.code).length < 5 || isNaN(Number(state.code)));
 
 const store = useUserStore();
+const vfm = useVfm();
 
 async function submitForm() {
   if (disableSubmitSignUp.value) {
@@ -24,86 +25,43 @@ async function submitForm() {
   const res = await AXIOS.post<IUser>('/sign-up', { name: state.name, tglogin: state.tglogin });
   console.log(res.data);
   store.setUser(res.data);
-}
-
-async function submitCode() {
-  const user = store.user;
-
-  if (user == null) {
-    return router.push({ name: 'login' });
-  }
-
-  if (disableSubmitCode.value) {
-    return;
-  }
-
-  await AXIOS.post<IUser, IUser>('/code', {
-    tglogin: user.tglogin,
-    passcode: Number(state.code),
-  });
-
-  store.setAuth(true);
-
-  return router.push({ name: 'profile' });
+  vfm.open(modalId);
 }
 </script>
 
 <template>
-  <div class="border-r border-black w-full">
-    <div class="border border-black border-r-0 p-2 rounded-2xl rounded-r-none flex flex-col items-center w-full">
-      <div class="flex flex-col items-center gap-1">
-        <p class="text-center font-thin text-xl">
-          Перейдите в бота, затем заполните форму и нажмите "Получить код"
-        </p>
-        <a
-          href="https://t.me/rps_auth_bot"
-          class="bg-transparent text-black py-2 px-4 border border-black disabled:bg-gray-300 disabled:border-transparent"
-          target="_blank">
-          Перейти в бота
-        </a>
-      </div>
-      <hr class="border-b-0.5 border-black my-2 w-full">
-      <form
-        class="flex flex-col items-center w-full gap-1"
-        @submit.prevent="submitForm">
-        <b-input
-          v-model.trim="state.tglogin"
-          input-class="h-[42px]"
-          placeholder="Логин в telegram" />
-        <b-input
-          v-model.trim="state.name"
-          class="mt-0.5"
-          input-class="h-[42px]"
-          placeholder="Имя" />
-        <button
-          type="submit"
-          class="bg-transparent text-black py-2 px-4 border border-black disabled:bg-gray-300 disabled:border-transparent"
-          :class="{'disabled:bg-gray-300 disabled:text-gray-600': disableSubmitSignUp}"
-          :disabled="disableSubmitSignUp">
-          Получить код
-        </button>
-      </form>
+  <div class="border border-black p-2 rounded-2xl rounded-tr-none flex flex-col items-center w-full">
+    <div class="flex flex-col items-center gap-1">
+      <p class="text-center font-thin text-xl">
+        Перейдите в бота, затем заполните форму и нажмите "Получить код"
+      </p>
+      <a
+        href="https://t.me/rps_auth_bot"
+        class="bg-transparent text-black py-2 px-4 border border-black disabled:bg-gray-300 disabled:border-transparent"
+        target="_blank">
+        Перейти в бота
+      </a>
     </div>
-    <div
-      v-if="store.user"
-      class="border border-black border-r-0 p-2 rounded-2xl rounded-r-none w-full mt-2">
-      <form
-        class="flex flex-col items-center gap-1"
-        @submit.prevent="submitCode">
-        <b-input
-          v-model="state.code"
-          type="number"
-          input-class="h-[42px]"
-          placeholder="Код из бота" />
-        <button
-          type="submit"
-          class="bg-transparent text-black py-2 px-4 border border-black disabled:bg-gray-300 disabled:border-transparent"
-          :class="{'disabled:bg-gray-300 disabled:text-gray-600': disableSubmitCode}"
-          :disabled="disableSubmitCode">
-          Отправить код
-        </button>
-      </form>
-    </div>
+    <hr class="border-b-0.5 border-black my-2 w-full">
+    <form
+      class="flex flex-col items-center w-full gap-1"
+      @submit.prevent="submitForm">
+      <b-input
+        v-model.trim="state.tglogin"
+        input-class="h-[42px]"
+        placeholder="Логин в telegram" />
+      <b-input
+        v-model.trim="state.name"
+        class="mt-0.5"
+        input-class="h-[42px]"
+        placeholder="Имя" />
+      <button
+        type="submit"
+        class="bg-transparent text-black py-2 px-4 border border-black disabled:bg-gray-300 disabled:border-transparent"
+        :class="{'disabled:bg-gray-300 disabled:text-gray-600': disableSubmitSignUp}"
+        :disabled="disableSubmitSignUp">
+        Получить код
+      </button>
+    </form>
   </div>
 </template>
-

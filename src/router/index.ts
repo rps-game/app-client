@@ -8,18 +8,18 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: () => import('../views/LoginView.vue'),
-      redirect: { name: 'sign-up' },
+      redirect: { name: 'sign-in' },
       meta: {
         allowAnonymous: true,
       },
       children: [
         {
-          path: '/sign-up',
+          path: 'sign-up',
           name: 'sign-up',
           component: () => import('../views/SignUpView.vue'),
         },
         {
-          path: '/sign-in',
+          path: 'sign-in',
           name: 'sign-in',
           component: () => import('../views/SignInView.vue'),
         },
@@ -27,23 +27,7 @@ const router = createRouter({
       beforeEnter(to, from, next) {
         const store = useUserStore();
 
-        if (store.user) {
-          next({ name: 'play' });
-        } else {
-          next();
-        }
-      },
-    },
-    {
-      path: '/code',
-      name: 'code',
-      component: () => import('../views/CodeView.vue'),
-      meta: {
-        allowAnonymous: true,
-      },
-      beforeEnter(to, from, next) {
-        const store = useUserStore();
-        if (store.user) {
+        if (store.isAuthorized) {
           next({ name: 'play' });
         } else {
           next();
@@ -57,29 +41,29 @@ const router = createRouter({
       redirect: { name: 'play' },
       children: [
         {
-          path: '/profile/play',
+          path: 'play',
           name: 'play',
           component: () => import('../views/NewGameView.vue'),
         },
         {
-          path: '/profile/pending-games',
+          path: 'pending-games',
           name: 'pending-games',
           component: () => import('../views/PendingGamesView.vue'),
           children: [
             {
-              path: '/profile/game/:id',
+              path: 'game/:id',
               name: 'game',
               component: () => import('../views/GameView.vue'),
             },
           ],
         },
         {
-          path: '/profile/history',
+          path: 'history',
           name: 'history',
           component: () => import('../views/HistoryView.vue'),
           children: [
             {
-              path: '/history/game/:id',
+              path: 'game/:id',
               name: 'history-game',
               component: () => import('../views/GameView.vue'),
             },
@@ -94,7 +78,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const store = useUserStore();
 
-  if (!to.meta.allowAnonymous && !store.user) {
+  if (!to.meta.allowAnonymous && !store.isAuthorized) {
     next({ name: 'login' });
   } else {
     next();

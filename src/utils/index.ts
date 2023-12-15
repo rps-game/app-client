@@ -99,7 +99,6 @@ axiosInstance.interceptors.response.use(response => {
 
 export async function logout() {
   const store = useUserStore();
-  await AXIOS.get('/logout');
   store.setAuth(false);
 }
 
