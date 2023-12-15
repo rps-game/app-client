@@ -5,6 +5,7 @@ import { useUserStore } from '@/stores/user';
 import type { IUser } from '@/stores/user';
 import { AXIOS } from '@/utils';
 import router from '@/router';
+import { Icon } from '@iconify/vue';
 
 const state = reactive({
   tglogin: '',
@@ -43,32 +44,38 @@ async function submitCode() {
 <template>
   <div class="border border-black p-2 rounded-2xl rounded-tl-none flex flex-col items-center gap-1 w-full px-4 py-6">
     <form
-      class="flex flex-row items-stretch w-full"
+      class="grid grid-cols-4 grid-rows-1 place-items-stretch w-full gap-0.5"
       @submit.prevent="submitForm">
       <b-input
         v-model.trim="state.tglogin"
-        class="flex items-stretch"
+        class="flex items-stretch col-span-3"
+        input-class="w-full"
         placeholder="Логин в telegram" />
       <button
         type="submit"
-        class="bg-transparent text-black py-2 px-4 border border-black disabled:text-gray-600 disabled:bg-gray-300 disabled:border-gray-300 ml-0.5"
+        class="flex justify-center bg-transparent text-black py-2 px-4 border border-black disabled:text-gray-600 disabled:bg-gray-300 disabled:border-gray-300"
         :disabled="disableSubmitSignUp">
-        Отправить
+        <Icon
+          icon="mdi:send"
+          class="w-6 h-6" />
       </button>
     </form>
     <form
       v-if="store.user"
-      class="flex flex-row justify-items-start items-stretch w-full"
+      class="grid grid-cols-4 grid-rows-1 place-items-stretch w-full gap-0.5"
       @submit.prevent="submitCode">
       <b-input
         v-model.trim="state.code"
-        class="flex items-stretch"
+        class="flex items-stretch col-span-3"
+        input-class="w-full"
         placeholder="Код" />
       <button
         type="submit"
-        class="bg-transparent flex-grow text-black py-2 px-4 border border-black disabled:bg-gray-300 disabled:border-gray-300 disabled:text-gray-600 ml-0.5"
+        class="flex justify-center bg-transparent text-black py-2 px-4 border border-black disabled:bg-gray-300 disabled:border-gray-300 disabled:text-gray-600"
         :disabled="disableSubmitCode">
-        Войти
+        <Icon
+          icon="mdi:login"
+          class="w-6 h-6" />
       </button>
     </form>
   </div>

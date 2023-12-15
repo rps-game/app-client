@@ -49,30 +49,35 @@ async function submitCode() {
 </script>
 
 <template>
-  <div class="border-r border-black">
-    <div class="border border-black border-r-0 p-2 rounded-2xl rounded-r-none flex flex-col items-center gap-1">
-      <p class="text-center font-thin text-xl">
-        Перейдите в бота, затем заполните форму и нажмите "Получить код"
-      </p>
-      <a
-        href="https://t.me/rps_auth_bot"
-        class="bg-transparent text-black py-2 px-4 border border-black disabled:bg-gray-300 disabled:border-transparent"
-        target="_blank">
-        Перейти в бота
-      </a>
+  <div class="border-r border-black w-full">
+    <div class="border border-black border-r-0 p-2 rounded-2xl rounded-r-none flex flex-col items-center w-full">
+      <div class="flex flex-col items-center gap-1">
+        <p class="text-center font-thin text-xl">
+          Перейдите в бота, затем заполните форму и нажмите "Получить код"
+        </p>
+        <a
+          href="https://t.me/rps_auth_bot"
+          class="bg-transparent text-black py-2 px-4 border border-black disabled:bg-gray-300 disabled:border-transparent"
+          target="_blank">
+          Перейти в бота
+        </a>
+      </div>
+      <hr class="border-b-0.5 border-black my-2 w-full">
       <form
-        class="flex flex-col items-center"
+        class="flex flex-col items-center w-full gap-1"
         @submit.prevent="submitForm">
         <b-input
           v-model.trim="state.tglogin"
+          input-class="h-[42px]"
           placeholder="Логин в telegram" />
         <b-input
           v-model.trim="state.name"
           class="mt-0.5"
+          input-class="h-[42px]"
           placeholder="Имя" />
         <button
           type="submit"
-          class="bg-transparent text-black py-2 px-4 border border-black disabled:bg-gray-300 disabled:border-transparent mt-2"
+          class="bg-transparent text-black py-2 px-4 border border-black disabled:bg-gray-300 disabled:border-transparent"
           :class="{'disabled:bg-gray-300 disabled:text-gray-600': disableSubmitSignUp}"
           :disabled="disableSubmitSignUp">
           Получить код
@@ -82,22 +87,21 @@ async function submitCode() {
     <div
       v-if="store.user"
       class="border border-black border-r-0 p-2 rounded-2xl rounded-r-none w-full mt-2">
-      <form>
-        <form
-          class="flex flex-col items-center"
-          @submit.prevent="submitCode">
-          <b-input
-            v-model="state.code"
-            type="number"
-            placeholder="Код из бота" />
-          <button
-            type="submit"
-            class="bg-transparent text-black py-2 px-4 border border-black disabled:bg-gray-300 disabled:border-transparent mt-2"
-            :class="{'disabled:bg-gray-300 disabled:text-gray-600': disableSubmitCode}"
-            :disabled="disableSubmitCode">
-            Отправить код
-          </button>
-        </form>
+      <form
+        class="flex flex-col items-center gap-1"
+        @submit.prevent="submitCode">
+        <b-input
+          v-model="state.code"
+          type="number"
+          input-class="h-[42px]"
+          placeholder="Код из бота" />
+        <button
+          type="submit"
+          class="bg-transparent text-black py-2 px-4 border border-black disabled:bg-gray-300 disabled:border-transparent"
+          :class="{'disabled:bg-gray-300 disabled:text-gray-600': disableSubmitCode}"
+          :disabled="disableSubmitCode">
+          Отправить код
+        </button>
       </form>
     </div>
   </div>
