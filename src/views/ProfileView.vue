@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import { useUserStore } from '@/stores/user';
 import type { IUser } from '@/stores/user';
 import { AXIOS } from '@/utils';
 import { reactive } from 'vue';
 
-const store = useUserStore();
 const state = reactive<{data: IUser | null}>({
   data: null,
 });
 
 async function getData() {
-  const res = await AXIOS.get(`/users/${store.userId}`);
+  const res = await AXIOS.get('/me');
   state.data = res.data;
 }
 
