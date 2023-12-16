@@ -96,7 +96,7 @@ void getUsers('');
           v-for="el in state.data"
           :key="`${el.id}-list`"
           class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-          <td class="p-2 text-center">
+          <td class="py-2 text-center">
             <button
               :disabled="!selectedIds.includes(el.id)"
               class="bg-sky-400 text-white py-2 px-4 rounded-2xl font-bold disabled:bg-gray-400"
@@ -113,7 +113,7 @@ void getUsers('');
           <td class="px-3 py-2">
             {{ el.rating }}
           </td>
-          <td class="p-2 text-center">
+          <td class="py-2 text-center">
             <button
               :disabled="selectedIds.includes(el.id)"
               class="bg-sky-400 text-white py-2 px-4 rounded-2xl font-bold disabled:bg-gray-400"
