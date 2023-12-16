@@ -16,5 +16,10 @@ if (user != null) {
 
 <template>
   <ModalsContainer />
-  <RouterView />
+  <div class="flex flex-col justify-between h-full">
+    <RouterView />
+    <div class="text-gray-400 text-xs text-center w-full">
+      Created with love by Maxim Givanyan ❤️
+    </div>
+  </div>
 </template>
