@@ -134,6 +134,7 @@ void getStats();
       </tbody>
     </table>
     <div
+      class="flex-auto"
       v-if="state.stats">
       <div class="grid grid-rows-2 grid-cols-3 border border-black">
         <div class="border-r border-b border-black text-center p-2 font-thin text-3xl">
@@ -155,11 +156,11 @@ void getStats();
           {{ state.stats.tieCount }}
         </div>
       </div>
-      <div class="grid grid-cols-10 col-span-12 border border-r-0 border-black mt-3">
+      <div class="grid grid-cols-10 col-span-12 gap-2 mt-3">
         <div
           v-for="(v, k) in emojiRPSLS"
           :key="k"
-          class="grid grid-cols-2 grid-rows-3 col-span-2 border-r border-black text-center">
+          class="grid grid-cols-2 grid-rows-3 col-span-2 border border-black text-center">
           <div
             class="row-span-2 col-span-2 text-6xl p-3 border-b border-black">
             {{ v.emoji }}
