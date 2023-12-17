@@ -41,10 +41,6 @@ onBeforeUnmount(() => {
 });
 
 function getSign(v: RPSLS): Sign {
-  if (state.stats == null) {
-    throw Error('No stats');
-  }
-
   return state.stats.signs.find(el => el._id == v) ?? {
     _id: v,
     count: 0,
