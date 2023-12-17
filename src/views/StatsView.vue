@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { AXIOS, emojiRPSLS, RPSLS, Sign, Stats } from '@/utils';
-import { IUser } from '@/stores/user';
+import { AXIOS, emojiRPSLS, RPSLS } from '@/utils';
+import type { Sign, Stats } from '@/utils';
+import type { IUser } from '@/stores/user';
 import { reactive, onBeforeUnmount } from 'vue';
 
 const state = reactive<{
