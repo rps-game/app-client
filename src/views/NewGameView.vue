@@ -54,6 +54,7 @@ const getUsers = debounce(async (v: string) => {
 
   const res = await AXIOS.get<IUser[]>('/users', { params: {
     search: v,
+    excludeMe: true,
   }});
 
   state.data = res.data;
