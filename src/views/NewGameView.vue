@@ -48,7 +48,7 @@ async function create() {
 }
 
 const getUsers = debounce(async (v: string) => {
-  if (v.length < 3 && v.length > 1) {
+  if (v.length < 3 && v.length >= 1) {
     return;
   }
 
