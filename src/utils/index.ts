@@ -89,11 +89,15 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use(response => {
   return response;
 }, error => {
-  alert(error.response?.data.message ?? error);
   if (error.response.status === 401) {
     void logout();
     void router.push({ name: 'login' });
+
+    throw error;
   }
+
+  alert(error.response?.data.message ?? error);
+
   throw error;
 });
 
@@ -105,7 +109,7 @@ export async function logout() {
 export const AXIOS = axiosInstance;
 
 export interface IPlayer {
-  id: string
+  id: string;
   name: string;
   isWinner?: boolean;
   delta?: number;
@@ -119,6 +123,27 @@ export enum Results {
   STALEMATE='stalemate',
 }
 
+export enum RPSLS {
+  ROCK = 1,
+  PAPER = 2,
+  SCISSORS = 3,
+  LIZARD = 4,
+  SPOCK = 5
+}
+
+export interface Sign {
+  _id: RPSLS;
+  count: number;
+  countWin: number;
+  winRate: number;
+}
+
+export interface Stats {
+  winCount: number;
+  tieCount: number;
+  signs: Sign[];
+}
+
 export interface IGame {
   id: string;
   members: IPlayer[];
@@ -127,3 +152,11 @@ export interface IGame {
     choice: number | number[]
   };
 }
+
+export const emojiRPSLS = {
+  [RPSLS.ROCK]: { emoji: '🗿', text: 'ROCK' },
+  [RPSLS.PAPER]: { emoji: '🧻', text: 'PAPER' },
+  [RPSLS.SCISSORS]: { emoji: '✂️', text: 'SCISSORS' },
+  [RPSLS.LIZARD]: { emoji: '🦎', text: 'LIZARD' },
+  [RPSLS.SPOCK]: { emoji: '🖖', text: 'SPOCK' },
+};

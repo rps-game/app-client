@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AXIOS, Results } from '@/utils';
+import { AXIOS, emojiRPSLS, Results, RPSLS } from '@/utils';
 import type { IGame } from '@/utils';
 import { reactive, onBeforeUnmount, computed, watch, onMounted } from 'vue';
 import type { ComputedRef } from 'vue';
@@ -13,14 +13,6 @@ const route = useRoute();
 const store = useUserStore();
 const modalId = Symbol('game-modal');
 const vfm = useVfm();
-
-enum RPSLS {
-  ROCK = 1,
-  PAPER = 2,
-  SCISSORS = 3,
-  LIZARD = 4,
-  SPOCK = 5
-}
 
 const userSelect: ComputedRef<RPSLS | undefined> = computed(() => state.game.members.find(m => m.id === store.userId)?.choice);
 
@@ -68,14 +60,6 @@ async function getData(gameId: string) {
   }
 }
 
-const map = {
-  [RPSLS.ROCK]: { emoji: '🗿', text: 'ROCK' },
-  [RPSLS.PAPER]: { emoji: '🧻', text: 'PAPER' },
-  [RPSLS.SCISSORS]: { emoji: '✂️', text: 'SCISSORS' },
-  [RPSLS.LIZARD]: { emoji: '🦎', text: 'LIZARD' },
-  [RPSLS.SPOCK]: { emoji: '🖖', text: 'SPOCK' },
-};
-
 onBeforeUnmount(() => {
   clearInterval(interval);
 });
@@ -83,9 +67,9 @@ onBeforeUnmount(() => {
 function getUserState(v?: RPSLS, delta?: number) {
   if (state.game.result && v) {
     if (state.game.result.value === Results.WIN) {
-      return v === state.game.result.choice ? `${map[v].emoji} +${delta} 👑` : `${map[v!].emoji} -${delta} 🤡`;
+      return v === state.game.result.choice ? `${emojiRPSLS[v].emoji} +${delta} 👑` : `${emojiRPSLS[v!].emoji} -${delta} 🤡`;
     } else {
-      return `🤡 - ${map[v].emoji}`;
+      return `🤡 - ${emojiRPSLS[v].emoji}`;
     }
   } else {
     return v ? '✅' : '🎲';
@@ -136,7 +120,7 @@ onMounted(() => {
       </ul>
       <div class="flex flex-row flex-wrap gap-1">
         <button
-          v-for="(v,k) in map"
+          v-for="(v,k) in emojiRPSLS"
           :key="`${k}-rpsls`"
           class="bg-transparent text-black py-2 px-4 rounded-2xl border border-black disabled:bg-gray-300 disabled:border-transparent"
           :class="{'disabled:bg-red-200': k == userSelect}"

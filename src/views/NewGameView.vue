@@ -142,8 +142,9 @@ void getUsers('');
       </li>
     </ul>
     <button
+      v-if="state.selected.length >= MIN"
       :disabled="state.selected.length > MAX || state.selected.length < MIN"
-      class="bg-red-400 text-white py-2 px-4 rounded-2xl mt-2"
+      class="bg-red-400 text-white py-2 px-4 rounded-2xl mt-2 disabled:bg-gray-300"
       @click="create">
       Создать
     </button>

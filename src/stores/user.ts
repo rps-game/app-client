@@ -1,7 +1,6 @@
 import { ref, computed } from 'vue';
 import type { Ref } from 'vue';
 import { defineStore } from 'pinia';
-import Cookies from 'js-cookie';
 
 export interface IUser {
   id: string;
@@ -24,13 +23,7 @@ export const useUserStore = defineStore('user', () => {
   };
 
   const setAuth = (auth: boolean) => {
-    if (auth && user.value) {
-      authorized.value = true;
-      Cookies.set('currentUser', JSON.stringify(user.value), { expires: 86400000 });
-    } else {
-      authorized.value = false;
-      Cookies.remove('currentUser');
-    }
+    authorized.value = Boolean(auth && user.value);
   };
 
   return { user, userId, setUser, isAuthorized, setAuth };

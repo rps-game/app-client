@@ -71,6 +71,14 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: '/stats',
+      name: 'stats',
+      component: () => import('../views/StatsView.vue'),
+      meta: {
+        allowAnonymous: true,
+      },
+    },
     { path: '/:pathMatch(.*)*', redirect: { name: 'login' }},
   ],
 });
