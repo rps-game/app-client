@@ -5,10 +5,14 @@ import type { IUser } from '@/stores/user';
 import { reactive, onBeforeUnmount } from 'vue';
 
 const state = reactive<{
-  stats: Stats | null,
+  stats: Stats,
   data: Array<IUser>
 }>({
-  stats: null,
+  stats: {
+    winCount: 0,
+    tieCount: 0,
+    signs: [],
+  },
   data: [],
 });
 
