@@ -134,8 +134,8 @@ void getStats();
       </tbody>
     </table>
     <div
-      class="flex-auto"
-      v-if="state.stats">
+      v-if="state.stats"
+      class="flex-auto">
       <div class="grid grid-rows-2 grid-cols-3 border border-black">
         <div class="border-r border-b border-black text-center p-2 font-thin text-3xl">
           Игр сыграно
