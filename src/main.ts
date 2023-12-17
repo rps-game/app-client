@@ -16,12 +16,15 @@ const vfm = createVfm();
 app.use(createPinia());
 app.use(vfm);
 
-const store = useUserStore();
-
 async function getData() {
-  const res = await AXIOS.get<IUser>('/me');
-  store.setUser(res.data);
-  store.setAuth(true);
+  const store = useUserStore();
+  try {
+    const res = await AXIOS.get<IUser>('/me');
+    store.setUser(res.data);
+    store.setAuth(true);
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 getData().then(() => {
